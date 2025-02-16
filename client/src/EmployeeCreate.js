@@ -25,11 +25,13 @@ const ADD_EMPLOYEE = gql`
       firstName
       lastName
       age
+      dateOfJoining
     }
   }
 `;
 
-const EmployeeCreate = () => {
+const EmployeeCreate = ({ refetchEmployees }) => {
+  // ✅ Fix: Define `formData` using `useState`
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -40,7 +42,12 @@ const EmployeeCreate = () => {
     employeeType: "FullTime",
   });
 
-  const [addEmployee, { data, loading, error }] = useMutation(ADD_EMPLOYEE);
+  // ✅ Fix: Define `addEmployee` using `useMutation`
+  const [addEmployee] = useMutation(ADD_EMPLOYEE, {
+    onCompleted: () => {
+      if (refetchEmployees) refetchEmployees(); // ✅ Refresh Employee List
+    }
+  });
 
   const handleChange = (e) => {
     setFormData({
@@ -52,17 +59,21 @@ const EmployeeCreate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const selectedDate = new Date(formData.dateOfJoining);
+      selectedDate.setHours(12, 0, 0, 0); // ✅ Prevents time zone shift
+
       await addEmployee({
         variables: {
           firstName: formData.firstName,
           lastName: formData.lastName,
           age: parseInt(formData.age),
-          dateOfJoining: formData.dateOfJoining,
+          dateOfJoining: selectedDate.toISOString(), // ✅ Convert to ISO format
           title: formData.title,
           department: formData.department,
           employeeType: formData.employeeType
         }
       });
+
       alert("Employee added successfully!");
       setFormData({
         firstName: "",
@@ -108,10 +119,8 @@ const EmployeeCreate = () => {
           <option value="Seasonal">Seasonal</option>
         </select>
 
-        <button type="submit" disabled={loading}>Add Employee</button>
+        <button type="submit">Add Employee</button>
       </form>
-
-      {error && <p>Error: {error.message}</p>}
     </div>
   );
 };
