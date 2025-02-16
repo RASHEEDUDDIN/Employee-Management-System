@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
 
 const EmployeeSchema = new mongoose.Schema({
-    FirstName: { type: String, required: true },
-    LastName: { type: String, required: true },
-    Age: { type: Number, required: true, min: 20, max: 70 },
-    DateOfJoining: { type: Date, required: true },
-    Title: { type: String, enum: ['Employee', 'Manager', 'Director', 'VP'], required: true },
-    Department: { type: String, enum: ['IT', 'Marketing', 'HR', 'Engineering'], required: true },
-    EmployeeType: { type: String, enum: ['FullTime', 'PartTime', 'Contract', 'Seasonal'], required: true },
-    CurrentStatus: { type: Boolean, default: true }
+    firstName: { type: String, required: true },
+    lastName: { type: String, required: true },
+    age: { type: Number, required: true },
+    dateOfJoining: { type: String, required: true },
+    title: { type: String, required: true },
+    department: { type: String, required: true },
+    employeeType: { type: String, required: true },
+    currentStatus: { type: Number, default: 1 }  // ✅ Default value = 1
 });
 
 module.exports = mongoose.model('Employee', EmployeeSchema);
