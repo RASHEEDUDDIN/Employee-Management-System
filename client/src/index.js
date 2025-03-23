@@ -1,7 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom/client"; // ✅ Use createRoot
+import ReactDOM from "react-dom/client";
 import App from "./App";
-import client, { ApolloProvider } from "./ApolloClient";
+import { ApolloProvider } from "@apollo/client"; // ✅ Use from @apollo/client
+import client from "./ApolloClient"; // ✅ From src folder
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

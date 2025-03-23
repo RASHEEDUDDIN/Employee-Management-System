@@ -20,7 +20,7 @@ const EmployeeSchema = new mongoose.Schema({
         enum: ['FullTime', 'PartTime', 'Contract', 'Seasonal'], 
         required: true 
     },
-    currentStatus: { type: Boolean, default: true } // true = working, false = retired
+    currentStatus: { type: Number, default: 1 }
 });
 
 module.exports = mongoose.model('Employee', EmployeeSchema);

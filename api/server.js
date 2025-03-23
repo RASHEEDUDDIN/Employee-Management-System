@@ -2,8 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const connectDB = require('./config/db');
-const typeDefs = require('./schema/typeDefs');
-const resolvers = require('./schema/resolvers');
+const typeDefs = require('./schema/typeDefs');  // ✅ Corrected path
+const resolvers = require('./schema/resolvers');  // ✅ Corrected path
 const cors = require('cors');
 
 const app = express();
